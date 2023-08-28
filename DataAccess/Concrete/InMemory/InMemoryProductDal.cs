@@ -85,7 +85,6 @@ public class InMemoryProductDal : IProductDal
             productToUpdate.UnitPrice = product.UnitPrice;
             productToUpdate.UnitsInStock = product.UnitsInStock;
         }
-
     }
 
     public void Delete(Product product) // a parameter like "productId" would be better
