@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
-using Entities.Abstract;
+using Core.Entities;
 
-namespace DataAccess.Abstract;
+namespace Core.DataAccess;
 //  generic constraint
 // class : reference type
 // IEntity : can be of type IEntity or a class which implements IEntity
@@ -13,4 +13,4 @@ public interface IEntityRepository<T> where T : class, IEntity, new()
     void Add(T entity);
     void Update(T entity);
     void Delete(T entity);
-}
+} 
