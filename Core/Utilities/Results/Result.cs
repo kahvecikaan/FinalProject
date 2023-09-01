@@ -2,12 +2,12 @@ namespace Core.Utilities.Results;
 
 public class Result : IResult
 {
-    public Result(bool success, string? message) : this(success)
+    protected Result(bool success, string? message) : this(success)
     {
         Message = message; // read-only properties can be set in the constructor
     }
- 
-    public Result(bool success)
+
+    protected Result(bool success)
     {
         Success = success; // read-only properties can be set in the constructor
     }
