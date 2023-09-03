@@ -27,10 +27,11 @@ class Program
 
         if (result.Success)
         {
-            foreach (var product in result.Data)
-            {
-                Console.WriteLine(product.ProductName + " / " + product.CategoryName);
-            } 
+            if (result.Data != null)
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + " / " + product.CategoryName);
+                }
         }
         else
         {
