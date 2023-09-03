@@ -38,7 +38,7 @@ public class ProductManager : IProductService
 
     public IDataResult<List<ProductDetailDto>> GetProductDetails()
     {
-        return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
+        return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails(), Messages.ProductsListed);
     }
 
     public IResult Add(Product product)
