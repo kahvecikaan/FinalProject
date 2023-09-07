@@ -1,22 +1,24 @@
-using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EntityFramework;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Business.DependencyResolvers.Autofac;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddSingleton<IProductService, ProductManager>(); // IoC Container, 1 instance of ProductManager for all requests
-builder.Services.AddSingleton<IProductDal, EfProductDal>(); // IoC Container, 1 instance of EfProductDal for all requests
-
+// Register other services
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Use Autofac as the default DI and configure it
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(b => 
+    {
+        b.RegisterModule(new AutofacBusinessModule());
+    });
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
