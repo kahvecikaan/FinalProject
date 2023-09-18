@@ -12,10 +12,12 @@ namespace Business.Concrete;
 public class ProductManager : IProductService
 {
     private readonly IProductDal _productDal;
+    private readonly ICategoryService _categoryService;
 
-    public ProductManager(IProductDal productDal)
+    public ProductManager(IProductDal productDal, ICategoryService categoryService)
     {
         _productDal = productDal;
+        _categoryService = categoryService;
     }
 
     public IDataResult<List<Product>> GetAll()
