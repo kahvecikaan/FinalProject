@@ -2,6 +2,7 @@ using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -48,7 +49,12 @@ public class ProductManager : IProductService
     [ValidationAspect(typeof(ProductValidator))]
     public IResult Add(Product product)
     {
-        // business codes
+        IResult? result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName),
+            CheckIfProductCountOfCategoryCorrect(product.CategoryId), CheckIfCategoryLimitExceeded());
+        if (result != null)
+        {
+            return result;
+        }
         _productDal.Add(product);
         return new SuccessResult(Messages.ProductAdded);
     }
