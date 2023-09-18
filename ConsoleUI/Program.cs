@@ -14,15 +14,26 @@ class Program
     private static void CategoryTest()
     {
         var categoryManager = new CategoryManager(new EfCategoryDal());
-        foreach (var category in categoryManager.GetAll())
+        var result = categoryManager.GetAll();
+
+        if (result.Success)
         {
-            Console.WriteLine(category.CategoryName);
+            if (result.Data != null)
+                foreach (var category in result.Data)
+                {
+                    Console.WriteLine(category.CategoryName);
+                }
+        }
+        else
+        {
+            Console.WriteLine(result.Message);
         }
     }
 
     private static void ProductTest()
     {
-        var productManager = new ProductManager(new EfProductDal());
+        var productManager = new ProductManager(new EfProductDal(),
+             new CategoryManager(new EfCategoryDal()));
         var result = productManager.GetProductDetails();
 
         if (result.Success)
