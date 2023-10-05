@@ -1,7 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers.Autofac;
-using Core.Utilities.IoC;
+using Core.DependencyResolvers;
+using Core.Extensions;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,9 +42,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
         b.RegisterModule(new AutofacBusinessModule());
     });
 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-ServiceTool.Create(builder.Services);
+builder.Services.AddDependencyResolvers(new CoreModule());
 
 var app = builder.Build();
 
